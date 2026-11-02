@@ -52,6 +52,13 @@ export function tallAction(width: number, height: number, icon: number, glyph: n
   return { icon: { x: div(width - side, 2), y, w: side, h: side }, title: { x: 0, y: text, w: width, h: name }, state: { x: 0, y: text + name, w: width, h: state },
     control: controlH ? { x: div(width - controlW, 2), y: text + name + state + 2 * gap, w: controlW, h: controlH } : EMPTY };
 }
+/** A Go to page tile's icon alone (tall_tile::icon_only): the largest circle the card holds, in its middle, never larger
+ * than a whole page's (`most`); null where the card has no room. */
+export function iconOnly(width: number, height: number, most: number): Rect | null {
+  const side = Math.min(width, height, most);
+  if (side <= 0) return null;
+  return { x: div(width - side, 2), y: div(height - side, 2), w: side, h: side };
+}
 
 // ---- climate_tile.h ----
 export type ClimateMetrics = { large: boolean; touch: number; gap: number; faceH: number[]; faceW: number[]; captionH: number; maxWidth: number; px: (n: number) => number };

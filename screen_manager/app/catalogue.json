@@ -1956,7 +1956,19 @@
      "dots",
      "lines"
     ]
-   }
+   },
+   "navigation": [
+    {
+     "key": "standard"
+    },
+    {
+     "key": "icon",
+     "screen": {
+      "feature": "icon_only",
+      "else": "standard"
+     }
+    }
+   ]
   },
   "script": {
    "firmware": null,

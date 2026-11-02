@@ -11,6 +11,7 @@ import TileResize from "./TileResize.vue";
 import TileBedside from "./tile/TileBedside.vue";
 import TileClockFace from "./tile/TileClockFace.vue";
 import TileEnergy from "./tile/TileEnergy.vue";
+import TileIconOnly from "./tile/TileIconOnly.vue";
 import TileLine from "./tile/TileLine.vue";
 import TileMeter from "./tile/TileMeter.vue";
 import TileText from "./tile/TileText.vue";
@@ -105,6 +106,7 @@ async function onKey(e: KeyboardEvent) {
     v-drag="preview || card.foreign ? null : { kind: 'tile', tile }" @click="activate" @dblclick="renameFrom" @keydown="card.live && onKey($event)">
     <TileBedside v-if="kind === 'bedside'" :card="card" />
     <TilePlugin v-else-if="kind === 'plugin-live' || kind === 'plugin'" :card="card" />
+    <TileIconOnly v-else-if="kind === 'icon-only'" :card="card" />
     <TileEnergy v-else-if="kind === 'energy'" :card="card" />
     <TileMeter v-else-if="kind === 'meter'" :card="card" />
     <TileText v-else-if="kind === 'text'" :card="card" />

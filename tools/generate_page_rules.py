@@ -9,8 +9,8 @@ from core import (DOMAINS, HEADER_ONLY_DOMAINS, CAMERA_DOMAINS, HEADER_BUILTIN,
                   HEADER_CONTENTS, HEADER_SHOWS, WIFI_CONTENTS, WIFI_SHOWS, BATTERY_CONTENTS, BATTERY_SHOWS, PLUGIN_ITEM_CONTENTS,
                   DISPLAYS, WIDE_ONLY, CONTROLS,
                   TILE_BACKGROUNDS, LIVE_REFRESH, PICTURE_OPTIONS, KEY_HOLDERS, KEY_DOMAINS, BUILTIN,
-                  FAVORITE_SHUFFLES, FAVORITE_REPEATS, ENERGY_FLOWS)
-from tile_icons import ICONS
+                  FAVORITE_SHUFFLES, FAVORITE_REPEATS, ENERGY_FLOWS, NAVIGATION_DISPLAYS)
+from tile_icons import BIG_GLYPHS, GLYPHS, ICONS
 import calendar_feed
 import meter
 
@@ -37,6 +37,11 @@ def rules():
             'favoriteShuffles': list(FAVORITE_SHUFFLES), 'favoriteRepeats': list(FAVORITE_REPEATS),
             # How the energy card shows power along a line, the first the default.
             'energyFlow': list(ENERGY_FLOWS),
+            # The faces of a tile that goes to a page, the first the default (catalogue/screen.yaml `navigation`).
+            'navigationDisplays': list(NAVIGATION_DISPLAYS),
+            # The glyphs the screen's large icon face carries (tile_icons.BIG_GLYPHS), by codepoint: the mockup draws an
+            # icon alone at that size where the screen does, and any other at the card's own.
+            'bigGlyphs': sorted({GLYPHS[name] for name in BIG_GLYPHS}),
             # A calendar card's choices (firmware 0.56.0, calendar_feed.validate): what it shows, the view its full
             # screen opens on, how many calendars and words it takes and how far it looks, each first or default the one
             # never stored.

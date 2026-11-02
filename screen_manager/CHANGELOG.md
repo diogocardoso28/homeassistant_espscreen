@@ -1,5 +1,7 @@
 ## Unreleased
 
+- **Icon only for Go to page tiles.** A Go to page tile has a second face under **Display**: its icon alone, large in the middle of the tile, without its name or the page it opens, for a menu of big icons. The icon's circle grows with the tile up to a full-page tile's, on every size the tile takes, and a tap still opens the page. The large icon face carries the icons tiles have by default, the Go to page arrow among them; another chosen icon keeps its usual size in the larger circle. A screen draws it after its next update and shows the name and page until then.
+
 - **Tessera is looking for funding.** The home overview asks for it, before the support card, with a button that mails Max: a day job comes first, and Tessera needs funding to stay alive. "Not now" puts it away for a week.
 
 ## 0.4.93 (firmware 0.59.0)

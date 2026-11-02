@@ -45,6 +45,7 @@
   "fonts": {
    "headline": 19,
    "icon": 29,
+   "icon_big": 44,
    "icon_home": 24,
    "icon_mini": 18,
    "label": 12,
@@ -169,6 +170,7 @@
   "fonts": {
    "headline": 18,
    "icon": 28,
+   "icon_big": 40,
    "icon_home": 25,
    "icon_mini": 18,
    "label": 11,
@@ -260,6 +262,7 @@
   "fonts": {
    "headline": 18,
    "icon": 28,
+   "icon_big": 40,
    "icon_home": 25,
    "icon_mini": 18,
    "label": 11,
@@ -351,6 +354,7 @@
   "fonts": {
    "headline": 23,
    "icon": 36,
+   "icon_big": 54,
    "icon_home": 29,
    "icon_mini": 22,
    "label": 15,
@@ -460,6 +464,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -579,6 +584,7 @@
   "fonts": {
    "headline": 18,
    "icon": 29,
+   "icon_big": 41,
    "icon_home": 26,
    "icon_mini": 18,
    "label": 11,
@@ -693,6 +699,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -831,6 +838,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -960,6 +968,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -1098,6 +1107,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -1236,6 +1246,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -1374,6 +1385,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -1512,6 +1524,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -1641,6 +1654,7 @@
   "fonts": {
    "headline": 30,
    "icon": 46,
+   "icon_big": 70,
    "icon_home": 37,
    "icon_mini": 29,
    "label": 20,
@@ -1780,6 +1794,7 @@
   "fonts": {
    "headline": 30,
    "icon": 47,
+   "icon_big": 71,
    "icon_home": 38,
    "icon_mini": 29,
    "label": 20,
@@ -1899,6 +1914,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 65,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -2008,6 +2024,7 @@
   "fonts": {
    "headline": 21,
    "icon": 33,
+   "icon_big": 50,
    "icon_home": 26,
    "icon_mini": 20,
    "label": 14,
@@ -2152,6 +2169,7 @@
   "fonts": {
    "headline": 47,
    "icon": 73,
+   "icon_big": 111,
    "icon_home": 59,
    "icon_mini": 45,
    "label": 31,
@@ -2292,6 +2310,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -2411,6 +2430,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -2525,6 +2545,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -2654,6 +2675,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -2783,6 +2805,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -2912,6 +2935,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -3041,6 +3065,7 @@
   "fonts": {
    "headline": 30,
    "icon": 46,
+   "icon_big": 70,
    "icon_home": 37,
    "icon_mini": 29,
    "label": 20,
@@ -3170,6 +3195,7 @@
   "fonts": {
    "headline": 21,
    "icon": 33,
+   "icon_big": 50,
    "icon_home": 26,
    "icon_mini": 20,
    "label": 14,
@@ -3299,6 +3325,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 26,
    "icon_mini": 26,
    "label": 18,
@@ -3439,6 +3466,7 @@
   "fonts": {
    "headline": 40,
    "icon": 63,
+   "icon_big": 96,
    "icon_home": 51,
    "icon_mini": 39,
    "label": 27,
@@ -3579,6 +3607,7 @@
   "fonts": {
    "headline": 33,
    "icon": 52,
+   "icon_big": 79,
    "icon_home": 42,
    "icon_mini": 32,
    "label": 22,
@@ -3719,6 +3748,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -3848,6 +3878,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -3985,6 +4016,7 @@
   "fonts": {
    "headline": 19,
    "icon": 29,
+   "icon_big": 44,
    "icon_home": 24,
    "icon_mini": 18,
    "label": 12,
@@ -4109,6 +4141,7 @@
   "fonts": {
    "headline": 18,
    "icon": 28,
+   "icon_big": 40,
    "icon_home": 25,
    "icon_mini": 18,
    "label": 11,
@@ -4200,6 +4233,7 @@
   "fonts": {
    "headline": 18,
    "icon": 28,
+   "icon_big": 40,
    "icon_home": 25,
    "icon_mini": 18,
    "label": 11,
@@ -4291,6 +4325,7 @@
   "fonts": {
    "headline": 23,
    "icon": 36,
+   "icon_big": 54,
    "icon_home": 29,
    "icon_mini": 22,
    "label": 15,
@@ -4400,6 +4435,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -4519,6 +4555,7 @@
   "fonts": {
    "headline": 18,
    "icon": 29,
+   "icon_big": 41,
    "icon_home": 26,
    "icon_mini": 18,
    "label": 11,
@@ -4633,6 +4670,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -4771,6 +4809,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -4900,6 +4939,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -5038,6 +5078,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -5176,6 +5217,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -5314,6 +5356,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -5452,6 +5495,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -5581,6 +5625,7 @@
   "fonts": {
    "headline": 30,
    "icon": 46,
+   "icon_big": 70,
    "icon_home": 37,
    "icon_mini": 29,
    "label": 20,
@@ -5718,6 +5763,7 @@
   "fonts": {
    "headline": 19,
    "icon": 29,
+   "icon_big": 44,
    "icon_home": 24,
    "icon_mini": 18,
    "label": 12,
@@ -5842,6 +5888,7 @@
   "fonts": {
    "headline": 18,
    "icon": 28,
+   "icon_big": 40,
    "icon_home": 25,
    "icon_mini": 18,
    "label": 11,
@@ -5933,6 +5980,7 @@
   "fonts": {
    "headline": 18,
    "icon": 28,
+   "icon_big": 40,
    "icon_home": 25,
    "icon_mini": 18,
    "label": 11,
@@ -6024,6 +6072,7 @@
   "fonts": {
    "headline": 23,
    "icon": 36,
+   "icon_big": 54,
    "icon_home": 29,
    "icon_mini": 22,
    "label": 15,
@@ -6133,6 +6182,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -6252,6 +6302,7 @@
   "fonts": {
    "headline": 18,
    "icon": 29,
+   "icon_big": 41,
    "icon_home": 26,
    "icon_mini": 18,
    "label": 11,
@@ -6366,6 +6417,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -6504,6 +6556,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -6633,6 +6686,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -6771,6 +6825,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -6909,6 +6964,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -7047,6 +7103,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -7185,6 +7242,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -7314,6 +7372,7 @@
   "fonts": {
    "headline": 30,
    "icon": 46,
+   "icon_big": 70,
    "icon_home": 37,
    "icon_mini": 29,
    "label": 20,
@@ -7453,6 +7512,7 @@
   "fonts": {
    "headline": 30,
    "icon": 47,
+   "icon_big": 71,
    "icon_home": 38,
    "icon_mini": 29,
    "label": 20,
@@ -7572,6 +7632,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 65,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -7681,6 +7742,7 @@
   "fonts": {
    "headline": 21,
    "icon": 33,
+   "icon_big": 50,
    "icon_home": 26,
    "icon_mini": 20,
    "label": 14,
@@ -7825,6 +7887,7 @@
   "fonts": {
    "headline": 47,
    "icon": 73,
+   "icon_big": 111,
    "icon_home": 59,
    "icon_mini": 45,
    "label": 31,
@@ -7965,6 +8028,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -8084,6 +8148,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -8198,6 +8263,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -8327,6 +8393,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -8456,6 +8523,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -8585,6 +8653,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -8714,6 +8783,7 @@
   "fonts": {
    "headline": 30,
    "icon": 46,
+   "icon_big": 70,
    "icon_home": 37,
    "icon_mini": 29,
    "label": 20,
@@ -8843,6 +8913,7 @@
   "fonts": {
    "headline": 21,
    "icon": 33,
+   "icon_big": 50,
    "icon_home": 26,
    "icon_mini": 20,
    "label": 14,
@@ -8972,6 +9043,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 26,
    "icon_mini": 26,
    "label": 18,
@@ -9112,6 +9184,7 @@
   "fonts": {
    "headline": 40,
    "icon": 63,
+   "icon_big": 96,
    "icon_home": 51,
    "icon_mini": 39,
    "label": 27,
@@ -9252,6 +9325,7 @@
   "fonts": {
    "headline": 33,
    "icon": 52,
+   "icon_big": 79,
    "icon_home": 42,
    "icon_mini": 32,
    "label": 22,
@@ -9392,6 +9466,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -9521,6 +9596,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -9660,6 +9736,7 @@
   "fonts": {
    "headline": 30,
    "icon": 47,
+   "icon_big": 71,
    "icon_home": 38,
    "icon_mini": 29,
    "label": 20,
@@ -9779,6 +9856,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 65,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -9888,6 +9966,7 @@
   "fonts": {
    "headline": 21,
    "icon": 33,
+   "icon_big": 50,
    "icon_home": 26,
    "icon_mini": 20,
    "label": 14,
@@ -10032,6 +10111,7 @@
   "fonts": {
    "headline": 47,
    "icon": 73,
+   "icon_big": 111,
    "icon_home": 59,
    "icon_mini": 45,
    "label": 31,
@@ -10172,6 +10252,7 @@
   "fonts": {
    "headline": 24,
    "icon": 37,
+   "icon_big": 56,
    "icon_home": 30,
    "icon_mini": 23,
    "label": 16,
@@ -10291,6 +10372,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,
@@ -10405,6 +10487,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -10534,6 +10617,7 @@
   "fonts": {
    "headline": 34,
    "icon": 54,
+   "icon_big": 82,
    "icon_home": 43,
    "icon_mini": 33,
    "label": 23,
@@ -10663,6 +10747,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -10792,6 +10877,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -10921,6 +11007,7 @@
   "fonts": {
    "headline": 30,
    "icon": 46,
+   "icon_big": 70,
    "icon_home": 37,
    "icon_mini": 29,
    "label": 20,
@@ -11050,6 +11137,7 @@
   "fonts": {
    "headline": 21,
    "icon": 33,
+   "icon_big": 50,
    "icon_home": 26,
    "icon_mini": 20,
    "label": 14,
@@ -11179,6 +11267,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 26,
    "icon_mini": 26,
    "label": 18,
@@ -11319,6 +11408,7 @@
   "fonts": {
    "headline": 40,
    "icon": 63,
+   "icon_big": 96,
    "icon_home": 51,
    "icon_mini": 39,
    "label": 27,
@@ -11459,6 +11549,7 @@
   "fonts": {
    "headline": 33,
    "icon": 52,
+   "icon_big": 79,
    "icon_home": 42,
    "icon_mini": 32,
    "label": 22,
@@ -11599,6 +11690,7 @@
   "fonts": {
    "headline": 27,
    "icon": 42,
+   "icon_big": 64,
    "icon_home": 34,
    "icon_mini": 26,
    "label": 18,
@@ -11728,6 +11820,7 @@
   "fonts": {
    "headline": 26,
    "icon": 41,
+   "icon_big": 62,
    "icon_home": 33,
    "icon_mini": 25,
    "label": 17,

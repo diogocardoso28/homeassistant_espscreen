@@ -468,6 +468,14 @@ inline bool icon_ink(lv_obj_t *icon,const lv_font_t *font,lv_font_glyph_dsc_t &g
   const std::string shown(text);size_t i=0;const uint32_t cp=header_bar::next_codepoint(shown,i);
   return i==shown.size()&&cp>=0xF0000&&lv_font_get_glyph_dsc(font,&g,cp,0)&&g.box_w&&g.box_h;
 }
+// Whether the large icon face carries the glyph `icon` shows and keeps its ink inside a circle of `side` as center_icon
+// wants it (78 % across its diagonal): a Go to page tile's icon alone takes that face, never one center_icon steps down.
+inline bool big_icon_fits(lv_obj_t *icon,int side){
+  lv_font_glyph_dsc_t g;
+  if(!big_icon_font||side<=0||!icon_ink(icon,big_icon_font,g))return false;
+  const int limit=side*78/100;
+  return (int)g.box_w*(int)g.box_w+(int)g.box_h*(int)g.box_h<=limit*limit;
+}
 inline void center_icon(lv_obj_t *icon){
   const lv_font_t *font=lv_obj_get_style_text_font(icon,LV_PART_MAIN);
   lv_font_glyph_dsc_t g;int dx=0,dy=0;
@@ -8897,6 +8905,20 @@ inline void render_slot(size_t slot) {
       const int vh=lv_font_get_line_height(face);lv_obj_set_size(w.value,d,vh);lv_obj_set_pos(w.value,(content_w-d)/2,(content_h-vh)/2);
     }
     lap(swipe_profile::GEOMETRY);
+  }else if(t.icon_only()){
+    // A Go to page tile with its icon alone (display icon): the largest circle the card holds up to a whole page's, in
+    // its middle (tall_tile::icon_only), with the large icon face where it carries the glyph and keeps inside the circle,
+    // else the card's own. No name, line or chevron; the card, its colours, its press and its tap stay as they are. The
+    // parts of the face it had before (a taller card's stack) go, so nothing of them stays on the slot.
+    lv_obj_add_flag(w.slider,LV_OBJ_FLAG_HIDDEN);hide_panel(w);end_extra(w);lv_obj_add_flag(w.progress,LV_OBJ_FLAG_HIDDEN);
+    for(auto *o:{w.title,w.value,w.unit})set_hidden(o,true);
+    const auto disc=tall_tile::icon_only(content_w,content_h,ui::px(large_tile?128:64));
+    lv_obj_set_size(w.circle,disc.w,disc.h);lv_obj_set_pos(w.circle,disc.x,disc.y);
+    tile_picture_place(w,t,disc.w,disc.x,disc.y);
+    const lv_font_t *icon_font=big_icon_fits(w.icon,disc.w)?big_icon_font:w.icon_font;
+    if(lv_obj_get_style_text_font(w.icon,LV_PART_MAIN)!=icon_font)set_font(w.icon,icon_font);
+    center_icon(w.icon);
+    lap(swipe_profile::GEOMETRY);
   }else if(energy){
     lv_obj_add_flag(w.slider,LV_OBJ_FLAG_HIDDEN);hide_panel(w);lv_obj_add_flag(w.progress,LV_OBJ_FLAG_HIDDEN);
     lap(swipe_profile::GEOMETRY);
@@ -9902,6 +9924,19 @@ inline bool check_tile_geometry() {
       const bool named=title.x1>=content.x1&&title.x2<=content.x2&&title.y1>=content.y1&&title.y2<=content.y2;
       if(!named)ESP_LOGE("ui_test","Picture name bounds slot=%u title=%d,%d..%d,%d content=%d,%d..%d,%d",(unsigned)w.index,(int)title.x1,(int)title.y1,(int)title.x2,(int)title.y2,(int)content.x1,(int)content.y1,(int)content.x2,(int)content.y2);
       fits=fits&&named;
+    }
+    // A Go to page tile's icon alone (tall_tile::icon_only): no name, its circle inside the card and in its middle, and
+    // the glyph's ink inside the circle in whichever face it took.
+    if(w.index<model.count&&model.tiles[w.index].icon_only()){
+      lv_area_t circle;lv_obj_get_coords(w.circle,&circle);
+      lv_font_glyph_dsc_t g;
+      const bool inked=icon_ink(w.icon,lv_obj_get_style_text_font(w.icon,LV_PART_MAIN),g);
+      const bool alone=lv_obj_has_flag(w.title,LV_OBJ_FLAG_HIDDEN)&&!lv_obj_has_flag(w.circle,LV_OBJ_FLAG_HIDDEN)&&
+        circle.x1>=content.x1&&circle.x2<=content.x2&&circle.y1>=content.y1&&circle.y2<=content.y2&&
+        std::abs(circle.x1+circle.x2-content.x1-content.x2)<=1&&std::abs(circle.y1+circle.y2-content.y1-content.y2)<=1&&
+        (!inked||((int)g.box_w<=circle.x2-circle.x1+1&&(int)g.box_h<=circle.y2-circle.y1+1));
+      if(!alone)ESP_LOGE("ui_test","Icon only bounds slot=%u circle=%d,%d..%d,%d content=%d,%d..%d,%d",(unsigned)w.index,(int)circle.x1,(int)circle.y1,(int)circle.x2,(int)circle.y2,(int)content.x1,(int)content.y1,(int)content.x2,(int)content.y2);
+      fits=fits&&alone;
     }
     if(w.index<model.count && model.tiles[w.index].height>1 && tile_grid){
       const int gap=lv_obj_get_style_pad_row(tile_grid,LV_PART_MAIN);

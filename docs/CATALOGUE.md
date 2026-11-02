@@ -87,6 +87,9 @@ tilt_open: ['100', '50']      # where a cover's slats stand open, the first the 
 picture: {fit: [...], overlay: [...], refresh: [...]}   # how a live picture sits on its tile
 map: {framing: [...], distance: [...], ...}             # a map card's choices, the first of each the default; needs the map display (docs/MAP.md)
 energy: {flow: [dots, lines]}  # the energy card's choices (screen.yaml only), the first the default (docs/ENERGY.md)
+navigation:                   # a Go to page tile's faces (screen.yaml only), the first standard and never stored
+  standard: {}
+  icon: {screen: {feature: icon_only, else: standard}}   # its icon alone, large in the middle of the card
 keypad:                       # a remote's card: per integration, the command each key sends
   apple_tv: {up: up, down: down, left: left, right: right, ok: select, back: menu, ...}
 key: false                    # may not stand as a key under the bedside clock

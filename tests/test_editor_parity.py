@@ -136,7 +136,7 @@ import {{ barKeys }} from "{model / 'tall-controls'}";
 import {{ coverLayout, slats }} from "{model / 'cover-tile'}";
 import {{ humidityText, readingText, stateText, temperatureText }} from "{model / 'tile-text'}";
 import {{ cardHead, cardLook, cardPanel, cardRoom, iconFace, inkBox }} from "{model / 'card-layout'}";
-import {{ climateLayout, tallAction, tallLayout }} from "{model / 'tall-layout'}";
+import {{ climateLayout, iconOnly, tallAction, tallLayout }} from "{model / 'tall-layout'}";
 import {{ mediaLayout }} from "{model / 'media-layout'}";
 import {{ vacuumLayout, vacuumMetrics }} from "{model / 'vacuum-tile'}";
 import {{ hsRgb, kelvinRgb, levelShown, luminosity, presetSizes, row as presetRow, shows }} from "{model / 'light-presets'}";
@@ -1000,6 +1000,8 @@ for (const look of DATA.looks) {
     }
     const a = tallAction(width, height, look.circle, look.circle - 10, look.name, look.state, gap, Math.min(width, 2 * touch), touch);
     out.push(`action ${a ? `${r(a.icon)} ${r(a.title)} ${r(a.state)} ${r(a.control)}` : "none"}`);
+    const alone = iconOnly(width, height, px(large ? 128 : 64));
+    out.push(`icon ${alone ? r(alone) : "none"}`);
     for (const modes of DATA.modes) for (const wide of [0, 60, 200]) {
       const c = climateLayout({ large, touch, gap, faceH: look.faces, faceW: [wide * 2, wide, Math.floor(wide / 2)], captionH: look.state, maxWidth: reach, px },
         width, Math.floor(height / 4), height, modes);
@@ -1048,6 +1050,10 @@ int main() {{
       std::printf("action");
       if (!a.fits) std::printf(" none"); else {{ r(a.icon); r(a.title); r(a.state); r(a.control); }}
       std::printf("\\n");
+      const auto alone = tall_tile::icon_only(width, height, ui::px(large ? 128 : 64));
+      std::printf("icon");
+      if (alone.empty()) std::printf(" none"); else r(alone);
+      std::printf("\\n");
       for (int modes : MODES) for (int wide : {{0, 60, 200}}) {{
         climate_tile::Metrics cm;cm.large = large;cm.touch = touch;cm.gap = gap;cm.max_width = reach;cm.caption_h = look.state;
         for (int f = 0; f < 3; ++f) cm.face_h[f] = look.faces[f];
@@ -1083,6 +1089,13 @@ int main() {{
 
     def test_one_centred_stack_is_tall_tiles_action(self):
         self.compare('action')
+
+    def test_a_go_to_page_tiles_icon_alone_is_tall_tiles_icon_only(self):
+        fw = self.compare('icon')
+        # A room smaller than a whole page's circle gives the circle all of its short side; a larger one stops there.
+        sides = {int(line.split()[1].split(',')[2]) for line in fw if line != 'icon none'}
+        self.assertIn(min(self.WIDTHS + self.HEIGHTS), sides)
+        self.assertIn(128, sides)
 
     def test_a_thermostats_forms_are_climate_tiles(self):
         fw = self.compare('climate')

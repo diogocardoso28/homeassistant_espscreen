@@ -762,6 +762,8 @@ struct Tile {
   // A navigation tile (screen.page_<n>, firmware 0.2.62+) and the page it goes to, counted from one.
   bool is_page() const { return page_entity(entity); }
   int page_target() const { return static_cast<int>(page_number(entity)); }
+  // Its icon alone, large in the middle of the card, with no name, line or chevron (catalogue/screen.yaml navigation).
+  bool icon_only() const { return display == "icon" && is_page(); }
   // Slots a tile takes: one, a row of two, or the six of a page.
   unsigned column_span() const { return full ? grid.columns : span ? span : wide ? grid.wide_span() : 1u; }
   unsigned row_span() const { return full ? grid.rows : height; }

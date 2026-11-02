@@ -261,6 +261,10 @@ ENERGY_MIN_FIRMWARE = (0, 47, 0)
 # How the energy card shows power along a line (catalogue/screen.yaml `energy`): running dots, the default and never
 # stored, or calm lines with an arrow. A firmware that doesn't know the choice keeps the dots.
 ENERGY_FLOWS = tuple(catalogue.of_type('screen')['energy']['flow'])
+# The faces of a tile that goes to a page (catalogue/screen.yaml `navigation`): its icon, name and page, the default and
+# never stored, or its icon alone (a screen whose hello says icon_only; an older one draws the standard face).
+NAVIGATION_DISPLAYS = tuple(item['key'] for item in catalogue.of_type('screen')['navigation'])
+ICON_ONLY_FEATURE = catalogue.option('screen', 'navigation', 'icon')['screen']['feature']
 MAP_DOMAINS = frozenset(MAP_CARD['with'])
 MAP_MAX_ENTITIES = MAP_CARD['max']
 MAP_OWN = ('map', *MAP_OPTIONS)
@@ -1973,10 +1977,12 @@ def validate_layout(data, stored=False, grid=DEFAULT_GRID):
             except ValueError as error:
                 raise ValueError(t('addon.errors.layout.invalid_setting', setting=str(error))) from None
             # A navigation tile (screen.page_<n>, firmware 0.2.62+) has a name, an icon, a colour and a width; never the page.
+            # Its face is its standard one, never stored, or its icon alone; any other face it was given goes, as before.
             if page_target(tile['entity']):
                 if options.get('size') == 'full':
                     raise ValueError(t('addon.errors.layout.navigation_size'))
-                options = {k: v for k, v in options.items() if k not in ('display', 'inline', 'controls', 'history_hours')}
+                options = {k: v for k, v in options.items() if k not in ('inline', 'controls', 'history_hours')
+                           and not (k == 'display' and v not in NAVIGATION_DISPLAYS[1:])}
             if 'background' in options and (not isinstance(options['background'],str) or options['background'] not in TILE_BACKGROUNDS):
                 raise ValueError(t('addon.errors.layout.background'))
             if 'icon' in options and not (options['icon'] == 'auto' or isinstance(options['icon'], str) and options['icon'] in tile_icons.ICONS):
@@ -1989,7 +1995,7 @@ def validate_layout(data, stored=False, grid=DEFAULT_GRID):
             # A key takes what a tile of its own takes, but no size, face or control: its clock decides its shape.
             if is_key(tile) and set(options) - set(KEY_OPTIONS):
                 raise ValueError(t('addon.errors.layout.unknown_settings'))
-            displays = DISPLAYS.get(domain, ('standard', 'watch'))
+            displays = NAVIGATION_DISPLAYS if page_target(tile['entity']) else DISPLAYS.get(domain, ('standard', 'watch'))
             # The map tile (app 0.4.36) is a map and nothing else, and has no slider or controls of its own.
             if tile['entity'] == MAP_TILE:
                 displays = ('map',)

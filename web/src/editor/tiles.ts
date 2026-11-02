@@ -229,7 +229,7 @@ export function tilePanel(tile: Tile): TilePanel {
   return { caps: entities.capabilities[tile.entity], supports: scr.supports, pictures: scr.pictures, catalogue: inv.inventory.controls?.[tile.entity.split(".")[0]],
     columns: useDocumentStore().editorLayout.grid.columns, attributes: entities.liveOf(tile.entity)?.a || {}, rangeless: scr.currentScreen?.climate_range === false,
     vacuumTile: scr.currentScreen ? scr.currentScreen.vacuum_tile !== false : undefined,
-    lightPresets: scr.currentScreen ? scr.currentScreen.light_presets === true : undefined };
+    lightPresets: scr.currentScreen ? scr.currentScreen.light_presets === true : undefined, iconOnly: scr.currentScreen?.icon_only };
 }
 export function resizeTile(tile: Tile, size: Size, axis: "columns" | "rows") {
   const current = currentView(tile);

@@ -10,8 +10,8 @@ import { availableControl, controlKeys, coverPrimary, hasCoverTilt, type Control
 import type { Live } from "./tile-text";
 import type { TileOptions } from "../types";
 
-export type FaceKind = "bedside" | "plugin-live" | "plugin" | "energy" | "text" | "analog" | "dial" | "flip-wide" | "flip" | "digital" | "graph" | "meter"
-  | "favorite" | "camera" | "watch" | "full" | "big-key" | "vacuum" | "tall" | "wide" | "standard";
+export type FaceKind = "bedside" | "plugin-live" | "plugin" | "icon-only" | "energy" | "text" | "analog" | "dial" | "flip-wide" | "flip" | "digital" | "graph"
+  | "meter" | "favorite" | "camera" | "watch" | "full" | "big-key" | "vacuum" | "tall" | "wide" | "standard";
 
 export type FaceInput = {
   entity: string;
@@ -150,6 +150,8 @@ function faceKind(input: FaceInput, face: Omit<Face, "kind">): FaceKind {
   const { entity, shape } = input, { domain, display } = face;
   if (entity === "screen.nightstand") return "bedside";
   if (input.plugin) return input.pluginRow ? "plugin-live" : "plugin";
+  // A Go to page tile with its icon alone (catalogue/screen.yaml navigation), on every size it takes.
+  if (pageTarget(entity) && display === "icon") return "icon-only";
   if (entity === "screen.energy") return "energy";
   // The template tile (docs/TEXT_TILE.md): the rows Home Assistant rendered, over the whole card at every size.
   if (entity === "screen.text") return "text";

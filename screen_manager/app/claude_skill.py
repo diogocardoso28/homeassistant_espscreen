@@ -137,7 +137,7 @@ actions:
 
 A tile with a control, a forecast or a sun path is drawn double-width on its own; you don't have to ask for that.
 
-A navigation tile goes to another page: add the entity `screen.page_3` (for page 3, `screen.page_1` and up, as far as the screen's `max_pages` goes) with a `name` such as "Heating"; it shows an arrow (or an `icon`), its name and the page number, and a tap opens that page. Handy as a menu on page 2 when page 1 is one full-page light switch. It is single or double width, never full-page.
+A navigation tile goes to another page: add the entity `screen.page_3` (for page 3, `screen.page_1` and up, as far as the screen's `max_pages` goes) with a `name` such as "Heating"; it shows an arrow (or an `icon`), its name and the page number, or with `display` `icon` its icon alone, large in the middle of the tile (on a screen whose firmware draws it), and a tap opens that page. Handy as a menu on page 2 when page 1 is one full-page light switch. It is single or double width, never full-page.
 
 On firmware {ENTITY_REPEAT_VERSION} or newer an entity can be on a screen more than once, such as a light as a small tile on page 1 and with its slider on page 3, or a `screen.page_1` named "Back" on every other page. `esp_screens_add_tile` always puts a new tile on the screen, also when the entity is there already; to change a tile, remove it and add it again with what it should have. Only the bedside clock (`screen.nightstand`) is on a screen once. On older firmware an entity is on a screen once (a navigation tile once per page from firmware {PAGE_TILE_REPEAT_VERSION}), and adding it again changes the tile that is there, or moves it when you name another place.
 

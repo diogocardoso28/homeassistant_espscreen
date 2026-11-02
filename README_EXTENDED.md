@@ -110,6 +110,12 @@ on the screen itself, and how updates work.
   Under **Goes to page** the editor offers the pages the screen has and the next, empty one, where a new sub-page
   starts. From firmware 0.2.65 the same page tile may sit on several pages of a screen, such as a tile back to the
   menu on every sub-page; older firmware takes each page tile once.
+  Under **Display** a Go to page tile shows its name and the page it opens (**Name and status**), or its icon alone
+  (**Icon only**): the icon in the largest circle the tile holds, in the middle of the tile, for a menu of big icons.
+  Any size works, and the circle grows with the tile up to a full-page tile's. The large icon face carries the icons
+  tiles have by default, the Go to page arrow among them; another chosen icon keeps its usual size in the larger circle.
+  A tap opens the page either way, and the tile's name stays in the editor. A screen draws Icon only once its firmware
+  is updated and shows the name and page until then.
 
 <p align="center">
   <img src="docs/images/guition-full-light.png" width="32%" alt="A full-page tile on the Guition: one big amber light switch">

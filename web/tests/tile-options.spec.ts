@@ -229,6 +229,31 @@ describe("the tile panel", () => {
     panel.unmount();
   });
 
+  it("turns a Go to page tile to its icon alone and back, keeping its page, name, icon and line", async () => {
+    const tile: Tile = { entity: "screen.page_2", name: "Living", slot: 0, options: { icon: "sofa", sub: "text:Downstairs" } };
+    appendTiles(tile);
+    const lineRow = (panel: ReturnType<typeof mount>) => panel.findAll(".prop").some((row) => row.text().includes(t("editor.tile.sub.label")));
+    const pick = async (panel: ReturnType<typeof mount>, label: string) => {
+      await panel.findAll(".seg button").find((b) => b.text() === label)!.trigger("click");
+      await nextTick();
+      panel.unmount();
+    };
+    let panel = mount(TileInspector, { props: { tile: current(tile)! } });
+    expect(lineRow(panel)).toBe(true);
+    await pick(panel, t("editor.tile.display.icon"));
+    expect(current(tile)).toMatchObject({ entity: "screen.page_2", name: "Living", options: { display: "icon", icon: "sofa", sub: "text:Downstairs" } });
+    expect(() => validatePages(doc.document!, doc.documentGrid!)).not.toThrow();
+    // The icon alone has no words on the card: no second line to choose, and the one chosen stays for later.
+    panel = mount(TileInspector, { props: { tile: current(tile)! } });
+    expect(lineRow(panel)).toBe(false);
+    await pick(panel, t("editor.tile.display.standard"));
+    expect(current(tile)!.options).toEqual({ icon: "sofa", sub: "text:Downstairs" });
+    expect(current(tile)).toMatchObject({ entity: "screen.page_2", name: "Living" });
+    panel = mount(TileInspector, { props: { tile: current(tile)! } });
+    expect(lineRow(panel)).toBe(true);
+    panel.unmount();
+  });
+
   const kinds: Tile[] = [
     { entity: "light.a", name: "", slot: 0 }, { entity: "light.a", name: "", slot: 0, options: { size: "wide" } },
     { entity: "light.a", name: "", slot: 0, options: { size: "tall" } }, { entity: "sensor.t", name: "", slot: 0 },
@@ -238,6 +263,11 @@ describe("the tile panel", () => {
     { entity: "switch.s", name: "", slot: 0, options: { size: "wide" } }, { entity: "number.n", name: "", slot: 0 },
     { entity: "screen.clock", name: "", slot: 0, options: { size: "wide" } }, { entity: "screen.settings", name: "", slot: 0 },
     { entity: "screen.page_2", name: "", slot: 0 }, { entity: "automation.a", name: "", slot: 0 },
+    // A Go to page tile with its icon alone, on a cell, a row, two rows and two by two: its faces and every choice save.
+    { entity: "screen.page_2", name: "", slot: 0, options: { display: "icon" } },
+    { entity: "screen.page_2", name: "", slot: 0, options: { display: "icon", size: "wide", icon: "sofa" } },
+    { entity: "screen.page_2", name: "", slot: 0, options: { display: "icon", size: "tall" } },
+    { entity: "screen.page_2", name: "", slot: 0, options: { display: "icon", size: "square", sub: "text:Living" } },
     { entity: "automation.a", name: "", slot: 0, options: { size: "wide", tap: "run" } },
     { entity: "person.p", name: "", slot: 0, options: { display: "map" } },
     { entity: "person.p", name: "", slot: 0, options: { size: "square", display: "map", framing: "home", map: ["person.q"] } },
@@ -376,6 +406,30 @@ describe("what the panel offers, as functions of the tile, Home Assistant and th
     expect(displayHint(tile("screen.clock", { display: "dial" }), panel({ supports: at("0.3.5") }))?.text).toBe(t("editor.tile.display.face_needs_firmware"));
     expect(displayHint(tile("screen.clock", { display: "dial" }), panel())).toBeNull();
     expect(displayHint(tile("light.a"), panel())).toBeNull();
+  });
+
+  it("gives a Go to page tile its own two faces, and says when the screen still draws the name and page", () => {
+    expect(displayChoices(tile("screen.page_2"), panel())).toEqual([["standard", t("editor.tile.display.standard")], ["icon", t("editor.tile.display.icon")]]);
+    expect(keys(displayChoices(tile("screen.page_2", { size: "square" }), panel({ pictures: false })))).toEqual(["standard", "icon"]);
+    // The clock keeps its faces; the icon alone is not one of them.
+    expect(keys(displayChoices(tile("screen.clock"), panel()))).not.toContain("icon");
+    expect(tileDisplay(tile("screen.page_2"))).toBe("standard");
+    expect(tileDisplay(tile("screen.page_2", { display: "icon" }))).toBe("icon");
+    expect(displayHint(tile("screen.page_2", { display: "icon" }), panel())).toEqual({ text: t("editor.tile.display.icon_hint"), warn: false });
+    expect(displayHint(tile("screen.page_2", { display: "icon" }), panel({ iconOnly: true }))?.warn).toBe(false);
+    expect(displayHint(tile("screen.page_2", { display: "icon" }), panel({ iconOnly: false }))).toEqual({ text: t("editor.tile.display.icon_needs_update"), warn: true });
+    expect(displayHint(tile("screen.page_2"), panel({ iconOnly: false }))).toBeNull();
+  });
+
+  it("keeps a Go to page tile's icon alone and drops its standard face, as the add-on does", () => {
+    expect(canonicalOptions("screen.page_2", { display: "icon", icon: "sofa", background: "blue" })).toEqual({ display: "icon", icon: "sofa", background: "blue" });
+    expect(canonicalOptions("screen.page_2", { display: "standard", icon: "sofa" })).toEqual({ icon: "sofa" });
+    for (const display of ["watch", "digital", "map", "live"]) expect(canonicalOptions("screen.page_2", { display })).toEqual({});
+    // Its second line stays stored while the icon stands alone, for the day it shows its name and page again.
+    expect(canonicalOptions("screen.page_2", { display: "icon", sub: "text:Living" })).toEqual({ display: "icon", sub: "text:Living" });
+    expect(choiceOffered(tile("screen.page_2"), "display", "icon", false)).toBe(true);
+    expect(choiceOffered(tile("screen.page_2", { display: "icon" }), "display", "standard", false)).toBe(true);
+    expect(choiceOffered(tile("screen.page_2", { display: "icon" }), "size", "full", false)).toBe(false);
   });
 
   it("offers the controls that fit the card and that Home Assistant has, and says when one is not offered", () => {

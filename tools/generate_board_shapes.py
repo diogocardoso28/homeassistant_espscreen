@@ -194,7 +194,10 @@ def shapes():
                                                                    # compact card with room takes (runtime_tiles
                                                                    # name_font): the mockup draws a card's head with
                                                                    # them as the glass does (app 0.4.90).
-                                                                   ('icon', 'FONT_ICON_SIZE'))},
+                                                                   ('icon', 'FONT_ICON_SIZE'),
+                                                                   # The large icon face, which a Go to page tile's
+                                                                   # icon alone takes where it fits (tall_tile icon_only).
+                                                                   ('icon_big', 'FONT_ICON_BIG_SIZE'))},
                  # The glass's grid in its own pixels (the look's GRID_MARGIN, GRID_GAP_X and TILE_PAD): the editor's
                  # mockup works out a card's width from them as runtime_tiles::rest_content_width does (app 0.4.32).
                  # And its height (app 0.4.74): the tile area runs from under the top bar (SCROLL_Y) to the page bar

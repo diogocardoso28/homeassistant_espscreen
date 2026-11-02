@@ -31,7 +31,8 @@ VERSION = re.compile(r'^\d+\.\d+\.\d+$')
 FIRST_TYPES = frozenset('alarm_control_panel automation binary_sensor button camera climate cover fan image input_boolean input_button '
                         'input_number input_select light lock media_player number person scene screen script select sensor sun switch '
                         'timer vacuum weather'.split())
-TOP = {'domain', 'firmware', 'displays', 'controls', 'inline', 'toggle', 'taps', 'guards', 'tilt_open', 'picture', 'map', 'key', 'keypad', 'memory', 'cards', 'favorite', 'energy', 'grow'}
+TOP = {'domain', 'firmware', 'displays', 'controls', 'inline', 'toggle', 'taps', 'guards', 'tilt_open', 'picture', 'map', 'key', 'keypad', 'memory', 'cards', 'favorite', 'energy', 'grow',
+       'navigation'}
 # What one tile of a type keeps in the memory inside a screen's chip (firmware 0.34.0+, docs/TILE_MEMORY.md): `bytes`
 # measured on a board with PSRAM, `extras` whether it keeps a block of extras. Every type says it, so a new one cannot
 # leave the screen's memory budget guessing; the most a tile may keep is a sanity bound, not a rule.
@@ -256,6 +257,13 @@ def normalise(tile, types, translations, facts, commands=None):
             check_keys(f'{where} energy', energy, {'flow'})
             if domain != 'screen' or 'energy' not in cards_of(data):
                 fail(where, 'energy options belong to the screen\'s energy card')
+        # The faces of a tile that goes to a page (screen.page_<n>): the first is what a screen draws that knows no other.
+        navigation = data.get('navigation')
+        if navigation is not None:
+            if domain != 'screen':
+                fail(where, 'navigation faces belong to the screen\'s own tiles that go to a page')
+            if list(navigation)[:1] != ['standard'] or (navigation['standard'] or {}):
+                fail(f'{where} navigation', 'starts with standard, the face every screen draws, with nothing it needs')
         memory = data.get('memory')
         if memory is None:
             fail(where, 'says what one tile of it keeps in the memory inside the chip (memory: {bytes: N, extras: true or '
@@ -294,6 +302,8 @@ def normalise(tile, types, translations, facts, commands=None):
             **({'favorite': [option(f'{where} favorite {key}', domain, key, value, favorite) for key, value in favorite.items()]}
                if favorite else {}),
             **({'energy': energy} if energy else {}),
+            **({'navigation': [option(f'{where} navigation {key}', domain, key, value, navigation) for key, value in navigation.items()]}
+               if navigation else {}),
         }
     check_keys('catalogue/_tile.yaml', tile, {'taps', 'sizes', 'history_hours', 'memory'})
     choice = tile.get('memory')

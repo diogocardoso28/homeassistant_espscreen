@@ -81,6 +81,13 @@ inline ActionLayout action(int width,int height,int icon,int glyph,int name,int 
   return {true,{(width-side)/2,y,side,side},{0,text,width,name},{0,text+name,width,state},
           control_h?Rect{(width-control_w)/2,text+name+state+2*gap,control_w,control_h}:Rect{}};
 }
+// A Go to page tile's icon alone (its Icon only face): the largest circle the card holds, in its middle, never larger
+// than the circle of a card over the whole page (`most`, render_full's). Nothing else stands on the card.
+inline Rect icon_only(int width,int height,int most) {
+  const int side=std::min({width,height,most});
+  if(side<=0)return {};
+  return {(width-side)/2,(height-side)/2,side,side};
+}
 // Font selection also uses measured width. A large display with a dense grid can
 // have less room than a small display with two columns.
 inline bool fits_text(Rect area,int width,int line_height) {

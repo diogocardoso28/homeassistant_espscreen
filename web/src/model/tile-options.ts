@@ -98,8 +98,12 @@ export function canonicalOptions(entity: string, options: TileOptions = {}, key 
   // a default is never stored (model/meter.ts, meter.validate).
   canonicalMeter(entity, out);
   for (const [key, value] of Object.entries(DEFAULTS)) if (out[key] === value) delete out[key];
-  // A Go to page tile has a name, an icon, a colour and a width, nothing else.
-  if (pageTile(entity)) for (const key of ["display", "inline", "controls", "history_hours"]) delete out[key];
+  // A Go to page tile has a name, an icon, a colour and a width, and of the faces its standard one, never stored, or its
+  // icon alone (catalogue/screen.yaml navigation); any other face it was given goes, as in core.validate_layout.
+  if (pageTile(entity)) {
+    for (const key of ["inline", "controls", "history_hours"]) delete out[key];
+    if (!rules.navigationDisplays.slice(1).includes(String(out.display))) delete out.display;
+  }
   if (rules.wideOnly.includes(String(out.display)) && !isWideSize(out.size ?? "single")) out.size = "wide";
   // A plugin's tile keeps only what the add-on takes for one (GitHub #224: growing to a tall size gave it `controls`).
   if (PLUGIN_TILE.test(entity)) for (const key of Object.keys(out)) if (!PLUGIN_TILE_OPTIONS.includes(key)) delete out[key];
@@ -153,7 +157,9 @@ export function choiceOffered(tile: Tile, key: string, value: unknown, controlle
   if (key === "tap" && value === "action" && !options.action) options = { ...options, action: tile.options?.action ?? SAMPLE_ACTION };
   if (!optionsSave(tile, options)) return false;
   const kept = options[key];
-  return JSON.stringify(kept) === JSON.stringify(value) || (kept === undefined && DEFAULTS[key] === value);
+  // A Go to page tile's standard face is what no stored face means (catalogue/screen.yaml navigation).
+  const unstored = key === "display" && pageTile(tile.entity) ? rules.navigationDisplays[0] : DEFAULTS[key];
+  return JSON.stringify(kept) === JSON.stringify(value) || (kept === undefined && unstored === value);
 }
 
 /** The choices of one field the inspector may show: those `choiceOffered` allows, and the one the tile has now, so a
@@ -183,6 +189,8 @@ export type TilePanel = {
   attributes: Record<string, any>;
   /** The screen draws no thermostat range (its firmware's climate_range is false). */
   rangeless: boolean;
+  /** Whether the screen's last hello said icon_only (a Go to page tile's icon alone); null or absent while unknown. */
+  iconOnly?: boolean | null;
   /** The screen's board has the vacuum card's module (docs/MODULES.md): its larger vacuum tile. */
   vacuumTile?: boolean;
   /** The screen's board has the light_presets module (docs/LIGHT_PRESETS.md): a light's presets on its tile. */
@@ -207,6 +215,8 @@ const clockFace = (tile: Tile) => tile.entity === "screen.clock" && ["dial", "fl
  * can do and what the board draws. The face the tile has stays. */
 export function displayChoices(tile: Tile, panel: TilePanel) {
   const c = panel.caps, display = tileDisplay(tile), size = sizeOfTile(tile);
+  // A Go to page tile (catalogue/screen.yaml navigation): its name and page, or its icon alone, whatever the screen.
+  if (pageTile(tile.entity)) return offer(tile, panel, "display", rules.navigationDisplays.map((key) => [key, t(`editor.tile.display.${key}`)] as [string, string]), display);
   const keys = ((rules.displays as Record<string, string[]>)[domainOf(tile)] || ["standard", "watch"]).filter((key) => {
     if (key === "forecast") return !c || c.displays.includes("forecast") || display === "forecast";
     if (key === "graph") return !c || c.displays.includes("graph") || display === "graph";
@@ -226,6 +236,11 @@ export function displayChoices(tile: Tile, panel: TilePanel) {
 export function displayHint(tile: Tile, panel: TilePanel): Hint | null {
   const c = panel.caps, display = tileDisplay(tile), supports = panel.supports, filled = cardFilled(tile, supports);
   let text = "";
+  // A Go to page tile's icon alone: what it does, or that a screen whose hello lacks icon_only draws the name and page.
+  if (pageTile(tile.entity) && display === "icon") {
+    const older = panel.iconOnly === false;
+    return { text: t(older ? "editor.tile.display.icon_needs_update" : "editor.tile.display.icon_hint"), warn: older };
+  }
   if (c && display === "graph" && !c.displays.includes("graph")) text = t("editor.tile.display.no_graph");
   else if (c && display === "forecast" && !c.displays.includes("forecast")) text = t("editor.tile.display.no_forecast");
   else if (c && display === "meter" && !c.displays.includes("meter")) text = t("editor.tile.display.no_meter");

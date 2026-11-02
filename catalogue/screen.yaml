@@ -13,6 +13,13 @@ cards:
 # grow with the power and carry an arrow the way it goes. A firmware before this one keeps the dots.
 energy:
   flow: [dots, lines]
+# The faces of a tile that goes to a page (screen.page_<n>), in the order the editor offers them: its icon, name and the
+# page it opens (standard, never stored), or its icon alone, as large as its card holds, in the middle of it (icon). A
+# screen whose hello lacks icon_only draws the standard face; the tap is the same on both.
+navigation:
+  standard: {}
+  icon:
+    screen: {feature: icon_only, else: standard}
 firmware: 0.2.14   # the first firmware that draws these cards
 displays:
   # The clock's faces; the dial and the flip clock came with firmware 0.3.6.

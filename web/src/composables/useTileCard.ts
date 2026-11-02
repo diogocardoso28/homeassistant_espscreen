@@ -16,9 +16,9 @@ import { bigKeyLine, bigValue, bodyText, ownWords, favoriteLine, fillPercent, he
 import { glyph, clockText } from "../model/topbar";
 import { resolveControls } from "../model/catalogue";
 import { cardContent, cardHeight, lineOf, restContent, uiScale, watchCard, watchPadding, wideChip, widestSetpoint } from "../model/ui-scale";
-import { cardHead, cardLook, cardPanel, cardRoom, iconFace, panelMetrics, pillFace, sliderCorner, type PanelKind } from "../model/card-layout";
+import { cardHead, cardLook, cardPanel, cardRoom, iconFace, iconOnlyFace, panelMetrics, pillFace, sliderCorner, type PanelKind } from "../model/card-layout";
 import { dotted, textPx } from "../model/text-fit";
-import { tallCard, type Rect, type TallText } from "../model/tall-layout";
+import { iconOnly, tallCard, type Rect, type TallText } from "../model/tall-layout";
 import { clockText as trackTime, mediaLayout, mediaMetrics, mediaTop } from "../model/media-layout";
 import { barKeys } from "../model/tall-controls";
 import { levelShown, presetLit as presetLit_, presetSizes, presetsOf } from "../model/light-presets";
@@ -261,6 +261,18 @@ export function useTileCard(props: TileCardProps) {
         bar: c.room ? { box: box(c.bar), fit: { room: c.room, width: c.bar.w } } : null, iconSize: glassPx(look.value.iconMini) },
     };
   });
+  // A Go to page tile with its icon alone as the glass lays it out (runtime_tiles, tall_tile::icon_only): the largest
+  // circle the card holds up to a whole page's, in its middle, and the face its icon takes there.
+  const iconAlone = computed(() => {
+    const r = room.value;
+    if (!r || face.value.kind !== "icon-only") return null;
+    const { large, px } = uiScale(doc.screenShape), disc = iconOnly(r.width, r.height, px(large ? 128 : 64));
+    if (!disc) return null;
+    const code = String(icon.value || "");
+    const size = iconOnlyFace(look.value, code, disc.w, rules.bigGlyphs.includes(code.toUpperCase()));
+    return { box: { left: glassPx(r.pad), top: glassPx(r.padY), width: glassPx(r.width), height: glassPx(r.height) },
+      circle: { left: glassPx(disc.x), top: glassPx(disc.y), width: glassPx(disc.w), height: glassPx(disc.h), fontSize: glassPx(size) } };
+  });
   // A card over the whole page as the glass lays it out (runtime_tiles render_full): without a control one big button,
   // the icon in a large circle with the name in the headline under it; a player the head with the media card under it.
   const full = computed(() => {
@@ -392,7 +404,7 @@ export function useTileCard(props: TileCardProps) {
 
   return proxyRefs({
     tile: computed(() => props.tile), preview: computed(() => Boolean(props.preview)), placeholder: computed(() => Boolean(props.placeholder)),
-    grid, foreign, domain, shape, goesTo, current, gone, face, texts, fill, lit, on, palette, background, icon, chip, wideFit, glassScale, sliderStyle, head, panel, pill, glassStyle, tall, tallStyle, full, fullStyle,
+    grid, foreign, domain, shape, goesTo, current, gone, face, texts, fill, lit, on, palette, background, icon, chip, wideFit, glassScale, sliderStyle, head, panel, pill, glassStyle, tall, tallStyle, full, fullStyle, iconAlone,
     watchFace, watchStyle, clock, energy: energyPaints(), pluginTile, pluginRow, artwork, cameraPicture, livePaused, favoritePicture, favoriteIcon, loaded,
     keyPlaces, chosen, live, presets, presetLit, features: computed(() => Number(current.value?.a?.supported_features || 0)),
     key,

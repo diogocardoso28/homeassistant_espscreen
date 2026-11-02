@@ -329,6 +329,33 @@ describe("TileCard", () => {
     expect(gone.find(".st").text()).toBe("Unavailable");
     expect(gone.find(".st").classes()).toContain("off");
   });
+  it("draws a Go to page tile with its icon alone: no words, a circle in the middle, the large face where it fits", () => {
+    const icons = useInventoryStore().inventory.icons!;
+    icons.builtin = { ...icons.builtin, "screen.page_2": "F0054" };
+    icons.groups = [{ name: "rooms", label: "Rooms", icons: [{ name: "bed", cp: "F02E3", label: "Bed" }] }] as any;
+    const px = (style: string | undefined, key: string) => Number(new RegExp(`${key}: ([0-9.]+)px`).exec(style || "")?.[1]);
+    const standard = placed({ entity: "screen.page_2", name: "Living", slot: 0 });
+    const alone = placed({ entity: "screen.page_2", name: "Living", slot: 1, options: { display: "icon" } });
+    // Its name and the page it opens stay off the card; the card still says its name to a screen reader.
+    expect(alone.find(".icon-alone > .ic").exists()).toBe(true);
+    expect(alone.find(".nm").exists()).toBe(false);
+    expect(alone.find(".goto").exists()).toBe(false);
+    expect(alone.attributes("aria-label")).toContain("Living");
+    expect(standard.find(".icon-alone").exists()).toBe(false);
+    // A circle, larger than the standard card's, with the arrow in the large face (page-rules bigGlyphs).
+    const circle = alone.find(".icon-alone > .ic").attributes("style");
+    expect(px(circle, "width")).toBe(px(circle, "height"));
+    expect(px(circle, "width")).toBeGreaterThan(px(standard.find(".ic").attributes("style"), "width") || 0);
+    const big = px(circle, "font-size");
+    // Two rows give it a larger circle in the same face; an icon the large face lacks keeps the card's own face.
+    const tall = placed({ entity: "screen.page_2", name: "Living", slot: 2, options: { display: "icon", size: "tall" } }).find(".icon-alone > .ic").attributes("style");
+    expect(px(tall, "width")).toBeGreaterThan(px(circle, "width"));
+    expect(px(tall, "font-size")).toBe(big);
+    const bed = placed({ entity: "screen.page_2", name: "Bedroom", slot: 5, options: { display: "icon", icon: "bed" } }).find(".icon-alone > .ic");
+    expect(bed.text()).not.toBe(alone.find(".icon-alone > .ic").text());
+    expect(px(bed.attributes("style"), "font-size")).toBeLessThan(big);
+  });
+
   it("draws a single tile as the screen does: the icon left, the name and value beside it", () => {
     useEntitiesStore().liveStates["sensor.t"] = { state: "1249", word: null, a: { unit_of_measurement: "W" } };
     const plain = placed({ entity: "sensor.t", name: "Power", slot: 0 });

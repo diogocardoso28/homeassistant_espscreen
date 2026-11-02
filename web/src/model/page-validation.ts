@@ -149,9 +149,11 @@ export function validateCardOptions(tile: PageTile, entityId: string, size: stri
   if (typeof a.label !== 'string' || a.label !== a.label.trim()) fail('normalization');
   // The map tile (app 0.4.36) is a map and nothing else.
   const displays = entityId === 'screen.map' ? ['map'] : (rules.displays as Record<string, string[]>)[domain] || ['standard', 'watch'];
+  // A Go to page tile's faces are its own (catalogue/screen.yaml navigation), checked below as the add-on normalizes them.
+  const navigation = tile.content.kind === 'navigation';
   const controls = ['none', ...((rules.controls as Record<string, string[]>)[domain] || [])];
   // Every choice from the tile catalogue (model/catalogue.ts): a type's taps, its guards, the hours a graph shows.
-  for (const [value, choices] of [[a.display, displays], [a.background, rules.backgrounds], [a.historyHours, TILE.history_hours],
+  for (const [value, choices] of [[navigation ? undefined : a.display, displays], [a.background, rules.backgrounds], [a.historyHours, TILE.history_hours],
     // A plugin's tap action (plugin:<plugin>.<action>, docs/PLUGINS.md) goes on any tile, as the add-on takes it
     // (core.validate_layout): which tiles it suits is its manifest's, and a screen without the plugin does nothing.
     [PLUGIN_TILE.test(String(i.tap ?? '')) ? undefined : i.tap, catalogueTaps(domain)], [i.inline, ['none', 'slider']], [i.controls, controls],
@@ -165,8 +167,9 @@ export function validateCardOptions(tile: PageTile, entityId: string, size: stri
   if (i.preset_levels !== undefined && (domain !== 'light' || i.preset_levels !== true)) fail('normalization');
   if (a.icon !== undefined && !icon(a.icon)) fail();
   if (rules.wideOnly.includes(a.display || '') && !isWideSize(size)) fail('normalization');
-  if (tile.content.kind === 'navigation' && (size === 'full' || a.display !== undefined || i.inline !== undefined ||
-      i.controls !== undefined || a.historyHours !== undefined)) fail('normalization');
+  // Of its faces only its icon alone is stored: the add-on drops the standard one and any other (core.validate_layout).
+  if (navigation && (size === 'full' || (a.display !== undefined && !rules.navigationDisplays.slice(1).includes(a.display)) ||
+      i.inline !== undefined || i.controls !== undefined || a.historyHours !== undefined)) fail('normalization');
   if (i.tap === 'toggle' && domain === 'screen') fail();
   if (i.inline === 'slider' && (!ofType(domain)?.inline || a.display === 'watch')) fail();
   if (a.refresh !== undefined && (a.display !== 'live' || !rules.refresh.includes(a.refresh))) fail('normalization');

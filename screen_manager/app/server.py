@@ -4469,6 +4469,10 @@ def create_app(manager, development=False):
             screen['text_tiles'] = has_module(screen, text_tile.FEATURE)
             # A light's presets (docs/LIGHT_PRESETS.md): only a board with the module light_presets draws them.
             screen['light_presets'] = has_module(screen, 'light_presets')
+            # A Go to page tile with its icon alone: whether the screen's last hello said it draws one, None when it said
+            # nothing yet. The editor then says that a screen that does not draws the name and page until it is updated.
+            said = getattr(manager.page_senders.get(screen['id']), 'features', None)
+            screen['icon_only'] = None if said is None else core.ICON_ONLY_FEATURE in said
             # Whether the board draws pictures (camera tiles, an alert's snapshot, an album cover): the boards with
             # memory for them say so with their camera sizes (boards.json); the firmware that draws them is a
             # separate question the editor asks by version, so an older screen still learns what an update brings.

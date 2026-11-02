@@ -95,6 +95,8 @@ const offer = <T extends string | number>(key: string, choices: [T, string][], n
 const display = computed(() => tileDisplay(props.tile));
 const displays = computed(() => displayChoices(props.tile, panel.value));
 const shownHint = computed(() => displayHint(props.tile, panel.value));
+// A Go to page tile with its icon alone (catalogue/screen.yaml navigation): no name or line on the card.
+const iconAlone = computed(() => goesTo.value > 0 && display.value === "icon");
 // A live camera fills its card on every size, whole or cut to fill it, its name on it or nothing.
 const pictureCard = computed(() => display.value === "live");
 // A map card (app 0.4.33) and the map tile of the screen's own cards (app 0.4.36): its own section.
@@ -277,13 +279,15 @@ const backgroundName = computed(() => inv.inventory.backgrounds?.[props.tile.opt
       <PropRow v-if="energyTile" :label="t('editor.tile.energy.flow.label')" icon="flash" :hint="t('editor.tile.energy.flow.hint')">
         <ChoiceField :choices="flowChoices" :value="current('flow', rules.energyFlow[0])" :tile="tile" preview-key="flow" :aria-label="t('editor.tile.energy.flow.label')" @pick="(v) => setTileOption(tile, 'flow', v)" />
       </PropRow>
-      <PropRow v-if="lookShown && tile.entity !== 'screen.settings' && !mapTile && !energyTile" :label="t('editor.tile.display.label')" icon="eye-outline" :hint="shownHint && !shownHint.warn ? shownHint.text : undefined">
+      <!-- A Go to page tile's own faces (catalogue/screen.yaml navigation): its name and page, or its icon alone. -->
+      <PropRow v-if="(lookShown && tile.entity !== 'screen.settings' && !mapTile && !energyTile) || goesTo" :label="t('editor.tile.display.label')" icon="eye-outline" :hint="shownHint && !shownHint.warn ? shownHint.text : undefined">
         <ChoiceField :choices="displays" :value="display" :tile="tile" preview-key="display" :aria-label="t('editor.tile.display.label')" @pick="(v) => setTileOption(tile, 'display', v)" />
         <template v-if="shownHint?.warn" #note><small class="help warn">{{ shownHint.text }}</small></template>
       </PropRow>
       <!-- A bedside clock and its keys have no second line: the clock draws the time, a key its name alone. A meter
-           writes its value and name itself. -->
-      <PropRow v-if="!bedside && !key && !mapCard && !energyTile && !meterCard" :label="t('editor.tile.sub.label')" icon="text-short" :hint="t(`editor.tile.sub.hint_${subKind}`)">
+           writes its value and name itself, and a Go to page tile's icon alone has no words; its line is kept for its
+           standard face. -->
+      <PropRow v-if="!bedside && !key && !mapCard && !energyTile && !meterCard && !iconAlone" :label="t('editor.tile.sub.label')" icon="text-short" :hint="t(`editor.tile.sub.hint_${subKind}`)">
         <ChoiceField :choices="subList" :value="subKind" :tile="tile" preview-key="sub" :sample="subSample" :aria-label="t('editor.tile.sub.label')" @pick="pickSubKind" />
         <template v-if="subKind === 'attr' || subKind === 'text'" #note>
           <UiSelect v-if="subKind === 'attr'" class="sub-value" :model-value="subAttribute" :options="subValues.map((value) => [value.key, value.name] as [string, string])"

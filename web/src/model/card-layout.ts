@@ -16,7 +16,8 @@ export function cardLook(shape: Shape) {
   const face = (name: keyof NonNullable<Shape["fonts"]>, standard: number, compact: number) => fonts[name] ?? Math.max(8, px(large ? standard : compact));
   return { large, radius: frame.radius, pad: frame.tile_pad, circle: frame.circle,
     label: face("label", 18, 11), sublabel: face("sublabel", 16, 11), sublabelBig: face("sublabel_big", 21, 14), headline: face("headline", 27, 18),
-    watch: face("watch_value", 38, 22), setpoint: face("setpoint", 64, 40), icon: face("icon", 42, 28), iconMini: face("icon_mini", 26, 18) };
+    watch: face("watch_value", 38, 22), setpoint: face("setpoint", 64, 40), icon: face("icon", 42, 28), iconMini: face("icon_mini", 26, 18),
+    iconBig: face("icon_big", 64, 40) };
 }
 export type CardLook = ReturnType<typeof cardLook>;
 
@@ -32,6 +33,13 @@ export function inkBox(code: string, size: number) {
 export function iconFace(look: CardLook, code: string, side: number, face = look.icon) {
   const box = inkBox(code, face), limit = Math.floor((side * 78) / 100);
   return box && face !== look.iconMini && side > 0 && box.w * box.w + box.h * box.h > limit * limit ? look.iconMini : face;
+}
+/** The face a Go to page tile's icon alone takes in its circle of `side` (runtime_tiles big_icon_fits): the large one
+ * where it carries the glyph (`big`, page-rules bigGlyphs) and its ink keeps inside 78 % of the circle across its
+ * diagonal, else the card's own as center_icon leaves it. */
+export function iconOnlyFace(look: CardLook, code: string, side: number, big: boolean) {
+  const box = big ? inkBox(code, look.iconBig) : null, limit = Math.floor((side * 78) / 100);
+  return box && side > 0 && box.w * box.w + box.h * box.h <= limit * limit ? look.iconBig : iconFace(look, code, side);
 }
 
 /** The padding above and below every card of this grid (bind_card): 4 where the grid's first cell, as the card was

@@ -76,6 +76,16 @@ describe("the face of a card", () => {
     expect(face("screen.page_2", [1, 2]).tallAction).toBe(true);
     expect(face("switch.s", [1, 2], { controls: "toggle" }).tallStack).toBe(true);
   });
+
+  it("draws a Go to page tile's icon alone on every size, and its name and page without the face", () => {
+    for (const size of [[1, 1], [2, 1], [1, 2], [2, 2]] as [number, number][]) {
+      expect(face("screen.page_2", size, { display: "icon" }).kind).toBe("icon-only");
+      expect(face("screen.page_2", size).kind).not.toBe("icon-only");
+    }
+    // The face is a Go to page tile's alone: on any other card "icon" is no face the screen draws.
+    expect(face("screen.clock", [1, 1], { display: "icon" }).kind).not.toBe("icon-only");
+    expect(face("light.a", [1, 1], { display: "icon" }).kind).toBe("standard");
+  });
 });
 
 describe("the controls a card draws", () => {

@@ -303,15 +303,17 @@ export type Screen = {
   // Tessera, which moves the table; ESPHome Device Builder's firmware no longer fits its slot (core.update_in_tessera).
   update_in_tessera?: boolean;
   firmware_known?: string | null; tile_limit?: number; page_limit?: number; full_page?: boolean; page_tiles_repeat?: boolean; entity_tiles_repeat?: boolean; no_title?: boolean; climate_range?: boolean; vacuum_tile?: boolean;
+  // Whether its last hello said it draws a Go to page tile's icon alone (icon_only); null before it said anything.
+  icon_only?: boolean | null;
   // The language its firmware was built in (app 0.2.90); null for older firmware, which is English.
   language?: string | null;
   // What the screen looks like (app 0.2.94): the glass it draws on, the cells of one page, its density and its look,
   // from the screen itself (firmware 0.2.80) or from the board it was built for (core.shape_of); the editor draws it.
   shape?: { width: number; height: number; columns: number; rows: number; dpi?: number; look?: string; catalog?: BoardCatalog;
     fonts?: { watch_value?: number; sublabel_big?: number; sublabel?: number; icon_mini?: number; label?: number; headline?: number; icon_home?: number;
-      watch_icon?: number; setpoint?: number; icon?: number };
+      watch_icon?: number; setpoint?: number; icon?: number; icon_big?: number };
     // The grid in glass pixels (boards.json); its heights (gap_y, top, page_bar) and a card's circle from app 0.4.74, a
-    // card's corner and its icon's face (fonts.icon) from app 0.4.90.
+    // card's corner and its icon's face (fonts.icon) from app 0.4.90, the large icon face (fonts.icon_big) after it.
     spacing?: { margin: number; gap: number; tile_pad: number; gap_y?: number; top?: number; page_bar?: number; circle?: number; radius?: number } } | null;
   // Which way it was built to hang (app 0.2.107): a screen standing up has another canvas and another grid, and
   // while it is offline only the YAML of its own profile says so.
